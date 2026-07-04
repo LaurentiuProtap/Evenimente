@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evenimente și Proțap - Chef</title>
+    <style>
+        /* --- PALETA DE CULORI --- */
+        :root {
+            --bg-deep-space: #0B0C10;
+            --card-charcoal: #1F2833;
+            --text-indigo: #45A29E;
+            --accent-neon: #8338EC;
+            --text-light: #e0e6ed;
+        }
+
+        /* --- STILURI GENERALE --- */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-deep-space);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { color: var(--text-indigo); }
+
+        /* --- HEADER & HERO SECTION --- */
+        header {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, var(--card-charcoal) 0%, var(--bg-deep-space) 100%);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            color: var(--text-light);
+        }
+
+        /* Butonul Central de Rezervare */
+        .btn-rezervare {
+            background-color: var(--accent-neon);
+            color: #fff;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(131, 56, 236, 0.4);
+        }
+
+        .btn-rezervare:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(131, 56, 236, 0.6);
+        }
+
+        /* --- SECȚIUNEA DE SERVICII (Poze) --- */
+        .servicii {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 50px 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: var(--card-charcoal);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border-top: 3px solid var(--text-indigo);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: #333; /* Placeholder color */
+        }
+
+        /* --- SECȚIUNEA REZERVARE --- */
+        #rezervare-sectiune {
+            background-color: var(--card-charcoal);
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--text-indigo);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-indigo);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--bg-deep-space);
+            color: var(--text-light);
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            outline: 2px solid var(--accent-neon);
+        }
+
+        /* --- FOOTER / CONTACT --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--card-charcoal);
+            margin-top: 50px;
+            border-top: 1px solid var(--text-indigo);
+        }
+        
+        #mesaj-status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .eroare { color: #ff4c4c; }
+        .succes { color: var(--text-indigo); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Măiestrie la Proțap & Grătar</h1>
+        <p>Evenimente de neuitat cu preparate gătite lent, sosuri artizanale și o experiență culinară desăvârșită.</p>
+        <button class="btn-rezervare" onclick="document.getElementById('rezervare-sectiune').scrollIntoView({behavior: 'smooth'})">Rezervă un Eveniment</button>
+    </header>
+
+    <section class="servicii">
+        <div class="card">
+            <img src="poza-protap.jpg" alt="Proțap Tradițional">
+            <h3>Proțap</h3>
+            <p>Carne fragedă, gătită lent pentru ore întregi, o adevărată atracție vizuală și culinară.</p>
+        </div>
+        <div class="card">
+            <img src="poza-gratar.jpg" alt="Grătar Premium">
+            <h3>Grătar Premium</h3>
+            <p>Fripturi suculente, frigărui și preparate la foc deschis pentru toți invitații tăi.</p>
+        </div>
+        <div class="card">
+            <img src="poza-sosuri.jpg" alt="Sosuri Făcute în Casă">
+            <h3>Sosuri Artizanale</h3>
+            <p>Rețete proprii de sosuri care completează perfect gustul cărnii prăjite.</p>
+        </div>
+    </section>
+
+    <section id="rezervare-sectiune">
+        <h2 style="text-align: center;">Verifică Disponibilitatea & Rezervă</h2>
+        <p style="text-align: center; font-size: 0.9em; margin-bottom: 20px;">Alege o dată. Dacă data este ocupată (ex: 4 Mai), sistemul te va anunța automat.</p>
+        
+        <form id="form-rezervare">
+            <div class="form-group">
+                <label for="data-rezervare">Data Evenimentului:</label>
+                <input type="date" id="data-rezervare" required>
+            </div>
+            <div class="form-group">
+                <label for="nume">Numele Tău:</label>
+                <input type="text" id="nume" required>
+            </div>
+            <div class="form-group">
+                <label for="telefon">Telefon:</label>
+                <input type="tel" id="telefon" required>
+            </div>
+            <button type="submit" class="btn-rezervare" style="width: 100%; margin-top: 10px; font-size: 1rem;">Trimite Solicitarea</button>
+            <div id="mesaj-status"></div>
+        </form>
+    </section>
+
+    <footer>
+        <h3>Contactează-ne</h3>
+        <p>Telefon: [Vei adăuga aici]</p>
+        <p>Email: [Vei adăuga aici]</p>
+        <p>Locație: [Vei adăuga aici]</p>
+    </footer>
+
+    <script>
+        // AICI VEI PUNE LINK-UL GENERAT DE GOOGLE APPS SCRIPT MAI TÂRZIU
+        const GOOGLE_SCRIPT_URL = "URL_UL_TAU_AICI"; 
+        
+        // Zile blocate manual sau preluate din Google Sheets (Format YYYY-MM-DD)
+        // De exemplu, data de 4 Mai:
+        let dateOcupate = ['2026-05-04']; 
+
+        const inputData = document.getElementById('data-rezervare');
+        const mesajStatus = document.getElementById('mesaj-status');
+
+        // Setăm data minimă ca fiind ziua de azi
+        const azi = new Date().toISOString().split('T')[0];
+        inputData.setAttribute('min', azi);
+
+        // Verificăm data când clientul o selectează
+        inputData.addEventListener('change', function() {
+            if (dateOcupate.includes(this.value)) {
+                mesajStatus.innerHTML = "<span class='eroare'>Ne pare rău, această dată este deja rezervată sau indisponibilă. Te rugăm să alegi altă zi.</span>";
+                this.value = ''; // Golim câmpul
+            } else {
+                mesajStatus.innerHTML = ""; // Ștergem mesajul de eroare
+            }
+        });
+
+        // Simularea trimiterii datelor (Urmează să fie conectat la API)
+        document.getElementById('form-rezervare').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = this.querySelector('button');
+            btn.innerText = "Se procesează...";
+            btn.disabled = true;
+
+            // Aici va veni codul de conectare cu Google Script. 
+            // Pentru moment simulăm un succes:
+            setTimeout(() => {
+                mesajStatus.innerHTML = "<span class='succes'>Cererea a fost trimisă cu succes! Te vom contacta în scurt timp.</span>";
+                this.reset();
+                btn.innerText = "Trimite Solicitarea";
+                btn.disabled = false;
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
