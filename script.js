@@ -1,8 +1,8 @@
-const SHEET_NAME = 'Sheet1'; // Asigură-te că foaia ta se numește așa
+const Rezervari_Protap = 'Sheet1'; // Asigură-te că foaia ta se numește așa
 
 // Funcția asta trimite site-ului tău datele deja ocupate (pentru a le bloca)
 function doGet(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(Rezervari_Protap);
   const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues(); 
   
   let dateOcupate = [];
@@ -20,7 +20,7 @@ function doGet(e) {
 
 // Funcția asta primește programarea nouă de pe site și o scrie în tabel
 function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(Rezervari_Protap);
   const body = JSON.parse(e.postData.contents);
   
   // Adăugăm un rând nou
