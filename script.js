@@ -2,7 +2,7 @@
 // PUNE AICI LINK-UL GENERAT DE GOOGLE APPS SCRIPT (Deploy > Web app)
 // Trebuie să se termine în /exec
 // ==========================================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyB0ESAcE5NHTeYQ32KhbqTuqdCMm2nmWof-DLs4l2aqgIZhUPoIVwsrbcqQtghRjHS/exec"; 
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3HgnxN207giL5INJujsgn3T9ESR3s7eSf7sd5HjHBV7yTvCQFr0WSAxan7vu9Zg2e/exec"; 
 
 let dateOcupate = []; // se va umple automat din Google Sheets
 
