@@ -25,6 +25,6 @@ function doPost(e) {
   
   // Adăugăm un rând nou
   sheet.appendRow([body.data, body.nume, body.telefon]);
-  
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyB0ESAcE5NHTeYQ32KhbqTuqdCMm2nmWof-DLs4l2aqgIZhUPoIVwsrbcqQtghRjHS/exec";
   return ContentService.createTextOutput(JSON.stringify({"status": "succes"})).setMimeType(ContentService.MimeType.JSON);
 }
