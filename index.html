@@ -66,7 +66,7 @@
             box-shadow: 0 6px 20px rgba(131, 56, 236, 0.6);
         }
 
-        /* --- SECȚIUNEA DE SERVICII (Poze) --- */
+        /* --- SECȚIUNEA DE SERVICII --- */
         .servicii {
             display: flex;
             justify-content: center;
@@ -91,7 +91,7 @@
             object-fit: cover;
             border-radius: 5px;
             margin-bottom: 15px;
-            background-color: #333; /* Placeholder color */
+            background-color: #333;
         }
 
         /* --- SECȚIUNEA REZERVARE --- */
@@ -140,9 +140,10 @@
         #mesaj-status {
             margin-top: 15px;
             font-weight: bold;
+            text-align: center;
         }
         .eroare { color: #ff4c4c; }
-        .succes { color: var(--text-indigo); }
+        .succes { color: #45A29E; }
     </style>
 </head>
 <body>
@@ -173,7 +174,7 @@
 
     <section id="rezervare-sectiune">
         <h2 style="text-align: center;">Verifică Disponibilitatea & Rezervă</h2>
-        <p style="text-align: center; font-size: 0.9em; margin-bottom: 20px;">Alege o dată. Dacă data este ocupată (ex: 4 Mai), sistemul te va anunța automat.</p>
+        <p style="text-align: center; font-size: 0.9em; margin-bottom: 20px;">Alege o dată disponibilă pentru a trimite solicitarea.</p>
         
         <form id="form-rezervare">
             <div class="form-group">
@@ -195,53 +196,11 @@
 
     <footer>
         <h3>Contactează-ne</h3>
-        <p>Telefon: [Vei adăuga aici]</p>
+        <p>Telefon: [0753635666]</p>
         <p>Email: [Vei adăuga aici]</p>
-        <p>Locație: [Vei adăuga aici]</p>
+        <p>Locație: [Ramnicu Valcea]</p>
     </footer>
 
-    <script>
-        // AICI VEI PUNE LINK-UL GENERAT DE GOOGLE APPS SCRIPT MAI TÂRZIU
-        const GOOGLE_SCRIPT_URL = "URL_UL_TAU_AICI"; 
-        
-        // Zile blocate manual sau preluate din Google Sheets (Format YYYY-MM-DD)
-        // De exemplu, data de 4 Mai:
-        let dateOcupate = ['2026-05-04']; 
-
-        const inputData = document.getElementById('data-rezervare');
-        const mesajStatus = document.getElementById('mesaj-status');
-
-        // Setăm data minimă ca fiind ziua de azi
-        const azi = new Date().toISOString().split('T')[0];
-        inputData.setAttribute('min', azi);
-
-        // Verificăm data când clientul o selectează
-        inputData.addEventListener('change', function() {
-            if (dateOcupate.includes(this.value)) {
-                mesajStatus.innerHTML = "<span class='eroare'>Ne pare rău, această dată este deja rezervată sau indisponibilă. Te rugăm să alegi altă zi.</span>";
-                this.value = ''; // Golim câmpul
-            } else {
-                mesajStatus.innerHTML = ""; // Ștergem mesajul de eroare
-            }
-        });
-
-        // Simularea trimiterii datelor (Urmează să fie conectat la API)
-        document.getElementById('form-rezervare').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const btn = this.querySelector('button');
-            btn.innerText = "Se procesează...";
-            btn.disabled = true;
-
-            // Aici va veni codul de conectare cu Google Script. 
-            // Pentru moment simulăm un succes:
-            setTimeout(() => {
-                mesajStatus.innerHTML = "<span class='succes'>Cererea a fost trimisă cu succes! Te vom contacta în scurt timp.</span>";
-                this.reset();
-                btn.innerText = "Trimite Solicitarea";
-                btn.disabled = false;
-            }, 1500);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
