@@ -1,35 +1,24 @@
-// ==========================================================
-// PUNE AICI LINK-UL GENERAT DE GOOGLE APPS SCRIPT (Deploy > Web app)
-// Trebuie să se termine în /exec
-// ==========================================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3HgnxN207giL5INJujsgn3T9ESR3s7eSf7sd5HjHBV7yTvCQFr0WSAxan7vu9Zg2e/exec"; 
+// =========================================================================
+// CONFIGURARE WEB3FORMS
+// 1. Intră pe https://web3forms.com
+// 2. Introduce e-mailul tău în căsuță și apasă pe "Create Access Key"
+// 3. Verifică-ți e-mailul, copiază cheia primită și pune-o între ghilimele mai jos:
+// =========================================================================
+const WEB3FORMS_ACCESS_KEY = "8c6d3148-3b83-4aee-88ac-cae3943ed19a"; 
 
-let dateOcupate = []; // se va umple automat din Google Sheets
+// Dacă vrei să blochezi manual anumite zile din cod, le adaugi în listă (Format YYYY-MM-DD)
+// Exemplu: data de 4 Mai este blocată
+let dateOcupate = ['2026-05-04']; 
 
 const inputData = document.getElementById('data-rezervare');
 const mesajStatus = document.getElementById('mesaj-status');
 const form = document.getElementById('form-rezervare');
 
-// Setăm data minimă ca fiind ziua de azi
+// Setăm automat data minimă ca fiind ziua de azi (să nu poată rezerva în trecut)
 const azi = new Date().toISOString().split('T')[0];
 inputData.setAttribute('min', azi);
 
-// La încărcarea paginii, luăm datele deja ocupate din Google Sheets
-function incarcaDateOcupate() {
-    if (GOOGLE_SCRIPT_URL === "URL_UL_TAU_AICI") return; // nu a fost configurat încă
-
-    fetch(GOOGLE_SCRIPT_URL)
-        .then(response => response.json())
-        .then(data => {
-            dateOcupate = data;
-        })
-        .catch(err => {
-            console.error("Nu am putut încărca datele ocupate:", err);
-        });
-}
-incarcaDateOcupate();
-
-// Verificăm data când clientul o selectează
+// Verificăm dacă data aleasă de client este pe lista celor blocate
 inputData.addEventListener('change', function() {
     if (dateOcupate.includes(this.value)) {
         mesajStatus.innerHTML = "<span class='eroare'>Ne pare rău, această dată este deja rezervată sau indisponibilă. Te rugăm să alegi altă zi.</span>";
@@ -39,49 +28,66 @@ inputData.addEventListener('change', function() {
     }
 });
 
-// Trimiterea reală a rezervării către Google Sheets
+// Trimiterea formularului prin Web3Forms direct pe e-mail
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    if (GOOGLE_SCRIPT_URL === "URL_UL_TAU_AICI") {
-        mesajStatus.innerHTML = "<span class='eroare'>Formularul nu este încă conectat. Adaugă link-ul Google Script în cod.</span>";
+    // Verificare siguranță dacă ai uitat să schimbi cheia
+    if (WEB3FORMS_ACCESS_KEY === "AICI_PUI_CHEIA_PRIMITA_PE_EMAIL") {
+        mesajStatus.innerHTML = "<span class='eroare'>Eroare de configurare! Adaugă cheia de la Web3Forms în fișierul script.js.</span>";
         return;
     }
 
-    const data = inputData.value;
-    const nume = document.getElementById('nume').value;
-    const telefon = document.getElementById('telefon').value;
+    const dataSelectata = inputData.value;
+    const numeClient = document.getElementById('nume').value;
+    const telefonClient = document.getElementById('telefon').value;
 
-    if (dateOcupate.includes(data)) {
-        mesajStatus.innerHTML = "<span class='eroare'>Această dată tocmai a fost rezervată de altcineva. Alege altă zi.</span>";
+    // Verificăm din nou data chiar și la trimitere
+    if (dateOcupate.includes(dataSelectata)) {
+        mesajStatus.innerHTML = "<span class='eroare'>Această dată este ocupată. Reîmprospătează pagina și alege altă zi.</span>";
         return;
     }
 
     const btn = this.querySelector('button');
-    btn.innerText = "Se procesează...";
+    btn.innerText = "Se trimite solicitarea...";
     btn.disabled = true;
     mesajStatus.innerHTML = "";
 
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ data: data, nume: nume, telefon: telefon })
+    // Construim obiectul cu datele care îți vor apărea în e-mail
+    const dateFormular = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `Rezervare Nouă Proțap - ${numeClient}`,
+        from_name: "Site-ul tău de Booking",
+        "Nume Client": numeClient,
+        "Telefon Contact": telefonClient,
+        "Data Evenimentului": dataSelectata
+    };
+
+    // Trimitem datele către API-ul Web3Forms utilizând Fetch
+    fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(dateFormular)
     })
-    .then(response => response.json())
-    .then(result => {
-        if (result.status === "succes") {
-            mesajStatus.innerHTML = "<span class='succes'>Cererea a fost trimisă cu succes! Te vom contacta în scurt timp.</span>";
-            dateOcupate.push(data);
-            form.reset();
+    .then(async (response) => {
+        let rezultat = await response.json();
+        if (response.status == 200) {
+            mesajStatus.innerHTML = "<span class='succes'>Cererea a fost trimisă cu succes! Te vom contacta în cel mai scurt timp pentru confirmare.</span>";
+            form.reset(); // Curățăm formularul
         } else {
-            mesajStatus.innerHTML = "<span class='eroare'>A apărut o eroare. Încearcă din nou sau sună-ne direct.</span>";
+            console.error(rezultat);
+            mesajStatus.innerHTML = "<span class='eroare'>A apărut o eroare: " + rezultat.message + "</span>";
         }
     })
-    .catch(err => {
-        console.error(err);
-        mesajStatus.innerHTML = "<span class='eroare'>Nu am putut trimite cererea. Verifică conexiunea și încearcă din nou.</span>";
+    .catch(error => {
+        console.error(error);
+        mesajStatus.innerHTML = "<span class='eroare'>Nu s-a putut trimite cererea. Verifică conexiunea la internet și încearcă din nou.</span>";
     })
     .finally(() => {
+        // Resetăm butonul în starea inițială
         btn.innerText = "Trimite Solicitarea";
         btn.disabled = false;
     });
